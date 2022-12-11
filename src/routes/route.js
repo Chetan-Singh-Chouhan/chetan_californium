@@ -7,10 +7,38 @@ const mentorModule = require('../abc/xyz/myModule');
 const req = require('express/lib/request');
 const { route } = require('express/lib/application');
 
+moviesArray=['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+moviesObject=[ 
+    {
+     "id": 1,
+     "name": "The Shining"
+    }, 
+    {
+     "id": 2,
+     "name": "Incendies"
+    }, 
+    {
+     "id": 3,
+     "name": "Rang de Basanti"
+    }, 
+    {
+     "id": 4,
+     "name": "Finding Nemo"
+    }]
+router.get("/movies", function(req, res){
+    
+    res.send(moviesArray)
+})
 
-router.get("/profile-details", function(req, res){
-    // Write the LOGIC here
-    res.send('dummy response')
+router.get("/movies/:indexNumber", function(req, res){
+    (req.params.indexNumber<moviesArray.length)?res.send(moviesArray[req.params.indexNumber]):res.send('Please use valid Index')
+})
+router.get("/films", function(req, res){
+    
+       res.send(moviesObject)
+})
+router.get("/films/:filmId",function(req,res){
+    (req.params.filmId<moviesObject.length)?res.send(moviesObject[req.params.filmId]):res.send('Please use valid Index')
 })
 
 router.get('/test-me', function (req, res) {
