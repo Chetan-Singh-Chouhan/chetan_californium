@@ -33,5 +33,19 @@ router.get("/films/:filmId",function(req,res){
     (req.params.filmId < moviesObject.length && req.params.filmId > 0 )?res.send(moviesObject[req.params.filmId-1]):res.send("No movie exists with this id")
     
 })
+router.get("/sol1",function(req,res){
+    let arr= [1,3,4,5,6,7]
+    firstElement=arr[0]
+    for(i=0;i<arr.length;i++){
+        (arr[i]==firstElement) ? firstElement++ : res.send(`missing number is ${firstElement}`)
+    }
+})
+router.get("/sol2",function(req,res){
+    let arr2=[33, 34, 35, 37, 38]
+    firstElement=arr2[0]
+    for(i=0;i<arr2.length;i++){
+        (arr2[i]==firstElement) ? firstElement++ : res.send(`missing number is ${firstElement}`)
+    }
+})
 
 module.exports = router;
