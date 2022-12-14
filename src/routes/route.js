@@ -29,10 +29,15 @@ let persons= [
  ]
  
 router.post("/checkVotingAge", function (req, res){
+    let qualifiedPersons=[]
     for(x in persons)
     {
-       if(persons[x].age>=req.query.age) persons[x].votingStatus=true
+       if(persons[x].age>=req.query.age) {
+          persons[x].votingStatus=true
+          qualifiedPersons.push(persons[x])
+       }
     }
-    res.send(persons)
+    res.send(qualifiedPersons)
+
 })
 module.exports = router;
