@@ -3,23 +3,6 @@ const router = express.Router();
 const req = require('express/lib/request');
 
 moviesArray=['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-moviesObject=[ 
-    {
-     "id": 1,
-     "name": "The Shining"
-    }, 
-    {
-     "id": 2,
-     "name": "Incendies"
-    }, 
-    {
-     "id": 3,
-     "name": "Rang de Basanti"
-    }, 
-    {
-     "id": 4,
-     "name": "Finding Nemo"
-    }]
 router.get("/movies", function(req, res){
     res.send(moviesArray)
 })
