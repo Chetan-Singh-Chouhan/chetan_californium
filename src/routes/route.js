@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-//const bookModel = require('../models/booksDb.js')
 const bookController=require('../controllers/storeBookData')
-   
 
-router.post("/createBook",bookController.storeData)
-router.get("/bookList",bookController.bookList)
-router.get("/getBooksInYear/:year",bookController.getBooksInYear)
-router.post("/getParticularBooks",bookController.getParticularBooks)
-router.get("/getXINRBooks",bookController.getXINRBooks)
-router.get("/getRandomBooks",bookController.getRandomBooks)
+router.post("/createBook",bookController.storeBookData)
+router.post("/createAuthor",bookController.storeAuthorData)
+router.get("/getList",bookController.getList)
+router.post("/twoStates",bookController.twoStates)
+router.get("/getBooks",bookController.getBooks)
 module.exports = router;
