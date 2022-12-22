@@ -1,9 +1,9 @@
 const mongoose=require('mongoose')
 const authorSchema = new mongoose.Schema({
-   author_id:Number,
-   author_name:String,
+   authorName:String,
    age:Number,
-   address:String
+   address:String,
+   rating:Number
 
 })
 module.exports=mongoose.model("authorData",authorSchema)

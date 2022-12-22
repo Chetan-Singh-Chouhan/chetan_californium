@@ -6,7 +6,7 @@ const { default : mongoose } = require('mongoose')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect("mongodb+srv://Chetan-functionUp:9EFNNLl4q6IIvejN@cluster0.evsfgyx.mongodb.net/W5D1_assignment_BooksData?retryWrites=true&w=majority",{useNewUrlParser:true})
+mongoose.connect("mongodb+srv://Chetan-functionUp:9EFNNLl4q6IIvejN@cluster0.evsfgyx.mongodb.net/W5D3_populate_reference_assignment_db?retryWrites=true&w=majority",{useNewUrlParser:true})
 .then(()=>console.log("Mongo db is connected"))
 .catch(err=>console.log(err))
 app.use('/', route);
