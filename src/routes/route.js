@@ -1,43 +1,12 @@
 const express = require('express');
 const router = express.Router();
-let persons= [
-    {
-    name: "Chetan",
-    age: 10,
-    votingStatus: false
- },
- {
-    name: "Ravi",
-    age: 20,
-    votingStatus: false
- },
- {
-    name: "Sachin",
-    age: 70,
-    votingStatus: false
- },
- {
-    name: "Tarannum",
-    age: 5,
-    votingStatus: false
- },
- {
-    name: "Reshma",
-    age: 40,
-    votingStatus: false
- }
- ]
- 
-router.post("/checkVotingAge", function (req, res){
-    let qualifiedPersons=[]
-    for(x in persons)
-    {
-       if(persons[x].age>=req.query.age) {
-          persons[x].votingStatus=true
-          qualifiedPersons.push(persons[x])
-       }
-    }
-    res.send(qualifiedPersons)
+const userController = require('../controllers/userController.js')
+const auth = require('../middleware/auth.js')
 
-})
+
+router.post("/users",userController.createUser)
+router.post("/login",userController.loginUser)
+router.get("/users/:userId",auth.isAuthTokenFound,auth.isTokenValid,userController.getUser)
+router.put("/users/:userId",auth.isAuthTokenFound,auth.isTokenValid,userController.updateUser)
+router.delete("/users/:userId",auth.isAuthTokenFound,auth.isTokenValid,userController.deleteUser)
 module.exports = router;
