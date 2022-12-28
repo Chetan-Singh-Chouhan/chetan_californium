@@ -9,9 +9,19 @@ const isAuthTokenFound = function(req,res,next){
 const isTokenValid = async function(req,res,next){
     try{
         let token=req.headers['x-auth-token']
-        let checkToken=jwt.verify(token,'mySecretKey')
-        if(!checkToken) res.send("Token is not valid")
+        jwt.verify(token,'mySecretKey')
         next()
+    }
+    catch(err){
+        res.send("Token is not valid")
+    }
+}
+const isUserAuthorised = async function(req,res,next){
+    try{
+        let userId = req.params.userId
+        let token=req.headers['x-auth-token']
+        let decodedToken = jwt.verify(token,'mySecretKey')
+        decodedToken.id!=userId ? res.send("You are not authorised") : next()
     }
     catch(err){
         console.log(err.message)
@@ -19,3 +29,4 @@ const isTokenValid = async function(req,res,next){
 }
 module.exports.isAuthTokenFound=isAuthTokenFound
 module.exports.isTokenValid=isTokenValid
+module.exports.isUserAuthorised=isUserAuthorised

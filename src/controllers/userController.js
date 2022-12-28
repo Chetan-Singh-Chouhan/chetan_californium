@@ -18,16 +18,21 @@ const loginUser = async function (req, res){
    const userPassword = req.body.password // fetching password from request
    const isDetailsRight= await userModel.findOne({emailId:userEmail,password:userPassword})
    if(isDetailsRight){
-      const userToken = jwt.sign({emailId:userEmail,password:userPassword},'mySecretKey')
-      res.send(userToken)
+      const userToken = jwt.sign({emailId:userEmail,password:userPassword,id:isDetailsRight._id},'mySecretKey')
+      res.send({status:true,data:userToken})
    }
    else res.send("Please Enter correct email and password")
    
 }
 const getUser= async function(req,res){
-   const userId = req.params.userId
-   const getUserData= await userModel.findById(userId)
-   res.send({data:getUserData})
+   try{
+      const userId = req.params.userId
+      const getUserData= await userModel.findById(userId)
+      res.send({data:getUserData})
+   }
+   catch(err){
+      console.log(err.message)
+   }
 }
 
 const updateUser= async function(req,res){
