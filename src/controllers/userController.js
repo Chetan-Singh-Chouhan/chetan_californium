@@ -6,7 +6,7 @@ const createUser = async function (req, res){
    try{
       let userData = req.body
       let getUserData = await userModel.create(userData)
-      res.send({data:getUserData})
+      res.status(201).send({data:getUserData})
    }
    catch(err){
       console.log(err.message)
@@ -14,15 +14,19 @@ const createUser = async function (req, res){
   
 }
 const loginUser = async function (req, res){
-   const userEmail = req.body.emailId    //fetching email from request
-   const userPassword = req.body.password // fetching password from request
-   const isDetailsRight= await userModel.findOne({emailId:userEmail,password:userPassword})
-   if(isDetailsRight){
-      const userToken = jwt.sign({emailId:userEmail,password:userPassword,id:isDetailsRight._id},'mySecretKey')
-      res.send({status:true,data:userToken})
+   try{
+      const userEmail = req.body.emailId    //fetching email from request
+      const userPassword = req.body.password // fetching password from request
+      const isDetailsRight= await userModel.findOne({emailId:userEmail,password:userPassword})
+      if(isDetailsRight){
+         const userToken = jwt.sign({emailId:userEmail,password:userPassword,id:isDetailsRight._id},'mySecretKey')
+         res.send({status:true,data:userToken})
+      }
+      else res.status(401).send("Please Enter correct email and password")
    }
-   else res.send("Please Enter correct email and password")
-   
+   catch(err){
+      console.log(err.message)
+   }
 }
 const getUser= async function(req,res){
    try{
@@ -50,13 +54,18 @@ const updateUser= async function(req,res){
    }
 }
 const deleteUser= async function(req,res){
-   const userId = req.params.userId
-   const getUserData= await userModel.findByIdAndUpdate(
-      userId,
-      {$set:{isDeleted:true}},
-      {new:true}
-      )
-   res.send(getUserData)
+   try{
+      const userId = req.params.userId
+      const getUserData= await userModel.findByIdAndUpdate(
+         userId,
+         {$set:{isDeleted:true}},
+         {new:true}
+         )
+      res.send(getUserData)
+   }
+   catch(err){
+      console.log(err.message)
+   }
 }
 module.exports.createUser=createUser
 module.exports.loginUser=loginUser

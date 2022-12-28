@@ -3,8 +3,13 @@ const jwt = require('jsonwebtoken')
 
 
 const isAuthTokenFound = function(req,res,next){
-    if (!req.headers['x-auth-token']) res.send("No x-auth-token header Found")
-    next()
+    try{
+        if (!req.headers['x-auth-token']) res.status(400).send("No x-auth-token header Found")
+        next()
+    }
+    catch(err){
+        console.log(err.message)
+    }
 }
 const isTokenValid = async function(req,res,next){
     try{
@@ -13,7 +18,7 @@ const isTokenValid = async function(req,res,next){
         next()
     }
     catch(err){
-        res.send("Token is not valid")
+        res.status(401).send("Token is not valid")
     }
 }
 const isUserAuthorised = async function(req,res,next){
@@ -21,7 +26,7 @@ const isUserAuthorised = async function(req,res,next){
         let userId = req.params.userId
         let token=req.headers['x-auth-token']
         let decodedToken = jwt.verify(token,'mySecretKey')
-        decodedToken.id!=userId ? res.send("You are not authorised") : next()
+        decodedToken.id!=userId ? res.status(403).send("You are not authorised") : next()
     }
     catch(err){
         console.log(err.message)
